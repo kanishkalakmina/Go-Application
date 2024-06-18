@@ -14,6 +14,9 @@ import Contact from "./page/Contact";
 import { useEffect } from "react";
 import axios from "axios";
 import Logout from "./page/Logout";
+import Report from "./page/Report";
+import Income from "./page/Income";
+import Bank from "./page/Bank";
 
 function App() {
   const token = window.localStorage.getItem("token");
@@ -54,22 +57,17 @@ function App() {
       window.localStorage.removeItem("token");
     }
 
-    console.log("Inside update token");
   };
 
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/add" element={<Add />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/delete/:id" element={<Delete />} />
-        <Route path="/blog/:id" element={<Blog />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="/" element={<Report />} />
+        <Route path="/report" element={<Home />} />
+        <Route path="/income" element={<Income />} />
+        <Route path="/statement" element={<Bank />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
     </>
