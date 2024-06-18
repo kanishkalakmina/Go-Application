@@ -63,7 +63,7 @@ const Report = () => {
   }, [dataJson]);
 
   return (
-    <div style={{height:"900px"}}>
+    <div style={{height:"800px"}}>
       <Bar
         data={chartData}
         options={{
