@@ -11,7 +11,7 @@ const Header = () => {
     <>
       <Container fluid className="container-fluid header">
         <h1 className="text-center text-uppercase">
-          React Application with Go fiber Backend
+          Budget Buddy
         </h1>
       </Container>
       <Container>
@@ -21,13 +21,13 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/">Blog</Link>
+              <Link to="/">DashBoard</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/about">Income</Link>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">Upload Bank Statements</Link>
             </li>
             <li>
               {loggedIn ? (

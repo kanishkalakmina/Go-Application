@@ -1,87 +1,54 @@
-import React from "react";
-
-import { Col, Container, Row } from "react-bootstrap";
-
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-
-import Spinner from "react-bootstrap/Spinner";
+import React, { useState, useEffect } from "react";
+import { Col, Container, Row, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [apiData, setApiData] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // Example state data (replace with actual implementation)
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [savingsGoals, setSavingsGoals] = useState([
+    { id: 1, name: "Goal 1", target: 1000, progress: 500 },
+    { id: 2, name: "Goal 2", target: 2000, progress: 1500 }
+  ]);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_ROOT;
-        const response = await axios.get(apiUrl);
-
-        if (response.status === 200) {
-          if (response?.data.statusText === "Ok") {
-            setApiData(response?.data?.blog_records);
-          }
-        }
-
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log(error.response);
-      }
-    };
-
-    fetchData();
-    return () => {};
-  }, []);
-
-  console.log(apiData);
-
-  if (loading) {
-    return (
-      <>
-        <Container className="spinner">
-          <Spinner animation="grow" />
-        </Container>
-      </>
-    );
-  }
+  // Example function to calculate savings goals progress percentage
+  const calculateProgress = (goal) => {
+    return ((goal.progress / goal.target) * 100).toFixed(2);
+  };
 
   return (
     <Container className="py-2">
       <Row>
-        <h3>
-          <Link to="add" className="btn btn-primary">
-            Add New
+        {/* Total Expenses and Total Income */}
+        <Col>
+          <h4>Total Expenses: ${totalExpenses.toFixed(2)}</h4>
+        </Col>
+        <Col>
+          <h4>Total Income: ${totalIncome.toFixed(2)}</h4>
+        </Col>
+      </Row>
+
+      <Row className="my-3">
+        {/* Savings Goals Progress */}
+        <Col>
+          <h4>Savings Goals Progress</h4>
+          <ul>
+            {savingsGoals.map((goal) => (
+              <li key={goal.id}>
+                {goal.name}: {calculateProgress(goal)}%
+              </li>
+            ))}
+          </ul>
+        </Col>
+      </Row>
+
+      <Row className="my-3">
+        {/* Add New Goal Button */}
+        <Col>
+          <Link to="/add" className="btn btn-primary">
+            Add New Goal
           </Link>
-        </h3>
-
-        <h5>{location.state && location.state}</h5>
-
-        {apiData &&
-          apiData.map((record, index) => (
-            <Col key={index} xs="3" className="py-2 box">
-              <div className="img-box justify-content-center py-2 mb-3">
-                <img width="150" height="150" src={`${process.env.REACT_APP_API_ROOT}/${record.image}`} />
-              </div>
-              <div className="title">
-                <Link to={`blog/${record.id}`}> {record.title}</Link>
-              </div>
-              
-              <div>
-                <Link to={`edit/${record.id}`}>
-                  <i className="fa fa-solid fa-pencil fa-2x" />
-                </Link>
-                &nbsp;
-                <Link to={`delete/${record.id}`}>
-                  <i className="fa fa-solid fa-trash fa-2x" />
-                </Link>
-              </div>
-              <div>{record.post}</div>
-            </Col>
-          ))}
+        </Col>
       </Row>
     </Container>
   );
